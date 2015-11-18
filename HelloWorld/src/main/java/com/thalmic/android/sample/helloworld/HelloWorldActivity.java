@@ -21,14 +21,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.Serializable;
-import java.net.Socket;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.UnknownHostException;
-import org.slf4j.Logger;
+
+import org.myrobotlab.service.data.MyoData;
 
 import com.thalmic.myo.AbstractDeviceListener;
 import com.thalmic.myo.Arm;
@@ -41,12 +36,6 @@ import com.thalmic.myo.XDirection;
 import com.thalmic.myo.scanner.ScanActivity;
 
 import org.myrobotlab.client.Client;
-import org.myrobotlab.framework.Message;
-import org.myrobotlab.framework.MessageService;
-import org.myrobotlab.framework.Outbox;
-import org.myrobotlab.logging.LoggerFactory;
-import org.myrobotlab.logging.Logging;
-import org.myrobotlab.service.interfaces.NameProvider;
 
 public class HelloWorldActivity extends Activity {
 
@@ -148,8 +137,6 @@ public class HelloWorldActivity extends Activity {
         public void onPose(Myo myo, long timestamp, Pose pose) {
             // Handle the cases of the Pose enumeration, and change the text of the text view
             // based on the pose we receive.
-            myodata.currentPose = pose;
-
             switch (pose) {
                 case UNKNOWN:
                     mTextView.setText(getString(R.string.hello_world));

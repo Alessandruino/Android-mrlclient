@@ -1,11 +1,16 @@
-package com.thalmic.android.sample.helloworld;
-import com.thalmic.myo.Pose;
+package org.myrobotlab.service.data;
+
 import java.io.Serializable;
 
+import com.thalmic.myo.enums.PoseType;
+
 /**
- * Created by Alessandruino on 17/11/15.
+ * @author GroG
+ *
+ *
+ *
  */
-public class MyoData {
+public class MyoData implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -14,14 +19,14 @@ public class MyoData {
     public double roll = 0;
     public double pitch = 0;
     public double yaw = 0;
-    public Pose currentPose;
+    public PoseType currentPose;
 
     // default constructor (values will be null until set)
     public MyoData() {
     }
 
     // constructor with initial values for roll/pitch/yaw
-    public MyoData(long timestamp, double roll, double pitch, double yaw, Pose currentPose) {
+    public MyoData(long timestamp, double roll, double pitch, double yaw, PoseType currentPose) {
         this.timestamp = timestamp;
         this.roll = roll;
         this.pitch = pitch;
@@ -32,38 +37,31 @@ public class MyoData {
 
 
     public double getRoll() {
-
         return roll;
     }
 
     public double getPitch() {
-
         return pitch;
     }
 
     public double getYaw() {
-
         return yaw;
     }
 
-    public Pose getPose() {
-
+    public PoseType getPose() {
         return currentPose;
     }
 
 
     public void setRoll(double roll) {
-
         this.roll = roll;
     }
 
     public void setPitch(double pitch) {
-
         this.pitch = pitch;
     }
 
     public void setYaw(double yaw) {
-
         this.yaw = yaw;
     }
 
