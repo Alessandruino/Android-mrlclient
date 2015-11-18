@@ -2,6 +2,8 @@ package org.myrobotlab.service.data;
 
 import java.io.Serializable;
 
+import com.thalmic.myo.enums.PoseType;
+
 /**
  * @author GroG
  *
