@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="myrobotlab-client">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/HelloWorld/libs/myrobotlab-client.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Background/Background.iml" filepath="$PROJECT_DIR$/Background/Background.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Glass/Glass.iml" filepath="$PROJECT_DIR$/Glass/Glass.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HelloWorld/HelloWorld.iml" filepath="$PROJECT_DIR$/HelloWorld/HelloWorld.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MultipleMyos/MultipleMyos.iml" filepath="$PROJECT_DIR$/MultipleMyos/MultipleMyos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/samples.iml" filepath="$PROJECT_DIR$/samples.iml" />
+    </modules>
+  </component>
+</project>

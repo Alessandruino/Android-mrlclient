@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/libs/myrobotlab-client.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="6e12ec1420e8a07721549b44323e145c03173de5">
+        <dex dex="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/build/intermediates/pre-dexed/release/myrobotlab-client-818b1dee0a09ab9dabca8825db24f1610216526a.jar" />
+    </item>
+    <item
+        jar="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/build/intermediates/exploded-aar/com.thalmic/myosdk/0.10.0/libs/native-libs.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="d24ac9790966ffbd1bd9d921a262572c94903027">
+        <dex dex="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/build/intermediates/pre-dexed/release/native-libs-9dc5a24dc2ae44256275b0ad2d5a0b5209d93aa4.jar" />
+    </item>
+    <item
+        jar="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/build/intermediates/exploded-aar/com.thalmic/myosdk/0.10.0/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="d189db75174a41996c33bb243d2228aacf10fa53">
+        <dex dex="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/build/intermediates/pre-dexed/release/classes-7c2f844ff5e448c1e75dcf3e44a696571aa0e1e5.jar" />
+    </item>
+
+</items>

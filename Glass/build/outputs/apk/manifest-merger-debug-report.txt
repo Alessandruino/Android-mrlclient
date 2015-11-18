@@ -1,0 +1,77 @@
+-- Merging decision tree log ---
+manifest
+ADDED from AndroidManifest.xml:2:1
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
+	package
+		ADDED from AndroidManifest.xml:3:5
+	android:versionName
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:versionCode
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+application
+ADDED from AndroidManifest.xml:5:5
+MERGED from com.thalmic:myosdk:0.10.0:15:5
+	android:label
+		ADDED from AndroidManifest.xml:8:9
+	android:allowBackup
+		ADDED from AndroidManifest.xml:6:9
+	android:icon
+		ADDED from AndroidManifest.xml:7:9
+activity#com.thalmic.android.sample.glass.MainActivity
+ADDED from AndroidManifest.xml:10:9
+	android:label
+		ADDED from AndroidManifest.xml:14:13
+	android:icon
+		ADDED from AndroidManifest.xml:12:13
+	android:immersive
+		ADDED from AndroidManifest.xml:13:13
+	android:name
+		ADDED from AndroidManifest.xml:11:13
+intent-filter#com.google.android.glass.action.VOICE_TRIGGER
+ADDED from AndroidManifest.xml:15:13
+action#com.google.android.glass.action.VOICE_TRIGGER
+ADDED from AndroidManifest.xml:16:17
+	android:name
+		ADDED from AndroidManifest.xml:16:25
+meta-data#com.google.android.glass.VoiceTrigger
+ADDED from AndroidManifest.xml:19:13
+	android:resource
+		ADDED from AndroidManifest.xml:21:17
+	android:name
+		ADDED from AndroidManifest.xml:20:17
+service#com.thalmic.android.sample.glass.MyoGlassService
+ADDED from AndroidManifest.xml:24:9
+	android:name
+		ADDED from AndroidManifest.xml:24:18
+uses-sdk
+INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
+MERGED from com.thalmic:myosdk:0.10.0:7:5
+	android:targetSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:minSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+uses-permission#android.permission.BLUETOOTH
+ADDED from com.thalmic:myosdk:0.10.0:11:5
+	android:name
+		ADDED from com.thalmic:myosdk:0.10.0:11:22
+uses-permission#android.permission.BLUETOOTH_ADMIN
+ADDED from com.thalmic:myosdk:0.10.0:12:5
+	android:name
+		ADDED from com.thalmic:myosdk:0.10.0:12:22
+uses-permission#android.permission.INTERNET
+ADDED from com.thalmic:myosdk:0.10.0:13:5
+	android:name
+		ADDED from com.thalmic:myosdk:0.10.0:13:22
+activity#com.thalmic.myo.scanner.ScanActivity
+ADDED from com.thalmic:myosdk:0.10.0:16:9
+	android:label
+		ADDED from com.thalmic:myosdk:0.10.0:18:13
+	android:theme
+		ADDED from com.thalmic:myosdk:0.10.0:19:13
+	android:name
+		ADDED from com.thalmic:myosdk:0.10.0:17:13

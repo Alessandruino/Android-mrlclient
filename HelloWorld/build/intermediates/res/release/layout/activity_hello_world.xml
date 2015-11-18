@@ -1,0 +1,55 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.thalmic.android.sample.helloworld.HelloWorldActivity"
+    tools:ignore="MergeRootFrame">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="77dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Pitch"
+        android:id="@+id/pitch"
+        android:layout_gravity="left|top"
+        android:textSize="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Roll"
+        android:id="@+id/roll"
+        android:layout_gravity="left|center_vertical"
+        android:textSize="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Yaw"
+        android:id="@+id/yaw"
+        android:layout_gravity="left|bottom"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/text"
+        android:text="@string/hello_world"
+        android:textSize="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        tools:ignore="SpUsage"/>
+
+    <TextView
+        android:id="@+id/lock_state"
+        android:text="@string/locked"
+        android:textSize="20dp"
+        android:layout_width="79dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="right|top"
+        tools:ignore="SpUsage"/>
+
+</FrameLayout>
+<!-- From: file:/Users/Alessandruino/Downloads/myo/samples/HelloWorld/src/main/res/layout/activity_hello_world.xml -->
