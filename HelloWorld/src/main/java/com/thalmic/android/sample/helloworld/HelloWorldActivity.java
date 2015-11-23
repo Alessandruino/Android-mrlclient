@@ -49,6 +49,7 @@ public class HelloWorldActivity extends Activity {
 
     MyoData myodata = new MyoData();
 
+
     // Classes that inherit from AbstractDeviceListener can be used to receive events from Myo devices.
     // If you do not override an event, the default behavior is to do nothing.
     public DeviceListener mListener = new AbstractDeviceListener() {
@@ -137,6 +138,7 @@ public class HelloWorldActivity extends Activity {
         public void onPose(Myo myo, long timestamp, Pose pose) {
             // Handle the cases of the Pose enumeration, and change the text of the text view
             // based on the pose we receive.
+            myodata.currentPose = pose.toString();
             switch (pose) {
                 case UNKNOWN:
                     mTextView.setText(getString(R.string.hello_world));
@@ -215,7 +217,6 @@ public class HelloWorldActivity extends Activity {
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
-                ;
                 handled = true;
             }
             return handled;
@@ -248,7 +249,6 @@ public class HelloWorldActivity extends Activity {
             finish();
             return;
         }
-
         // Next, register for DeviceListener callbacks.
         hub.addListener(mListener);
         hub.attachToAdjacentMyo();
