@@ -139,6 +139,13 @@ public class HelloWorldActivity extends Activity {
             // Handle the cases of the Pose enumeration, and change the text of the text view
             // based on the pose we receive.
             myodata.currentPose = pose.toString();
+            try {
+
+                //client.send("servo01", "moveTo",(roll+90.0));
+                client.send("myo","publishMyoData",myodata);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             switch (pose) {
                 case UNKNOWN:
                     mTextView.setText(getString(R.string.hello_world));
