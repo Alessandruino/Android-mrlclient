@@ -8,6 +8,11 @@ package com.thalmic.android.sample.helloworld;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.inputmethod.EditorInfo;
@@ -37,13 +42,40 @@ import com.thalmic.myo.scanner.ScanActivity;
 
 import org.myrobotlab.client.Client;
 
-public class HelloWorldActivity extends Activity {
+
+public class HelloWorldActivity extends Activity implements SensorEventListener{
+
+    LowPassFilter filterYaw = new LowPassFilter(0.03f);
 
     private TextView mLockStateView;
     private TextView mTextView;
     private TextView mRoll;
     private TextView mPitch;
     private TextView mYaw;
+
+    private SensorManager sensorManager;
+
+    private Sensor vector;
+    private Sensor acc;
+    private Sensor mag;
+
+    private float[] rMatrix = new float[9];
+    private float[] rVector = new float[3];
+    private float[] accVector = new float[3];
+    private float[] magVector = new float[3];
+    private float[] result = new float[3];
+    private float[] tempRMatrix = new float[9];
+    private float[] quaternion = new float[4];
+
+    private static final int SCALE = 180;
+    private double rollW;
+    private double pitchW;
+    private double yawW;
+
+    private double roll;
+    private double pitch;
+    private double yaw;
+
 
     Client client;
 
@@ -198,6 +230,11 @@ public class HelloWorldActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hello_world);
 
+        sensorManager = (SensorManager)this.getSystemService(SENSOR_SERVICE);
+        vector = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        acc = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mag = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
         mLockStateView = (TextView) findViewById(R.id.lock_state);
         mTextView = (TextView) findViewById(R.id.text);
         mRoll = (TextView) findViewById(R.id.roll);
@@ -291,6 +328,77 @@ public class HelloWorldActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void onResume() {
+        super.onResume();
+        // Register a listener for the sensor.
+        sensorManager.registerListener(this, vector, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, acc, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, mag, SensorManager.SENSOR_DELAY_GAME);
+    }
+
+    public final void onSensorChanged(SensorEvent event) {
+        // get reading from the sensor
+        switch (event.sensor.getType()) {
+            case Sensor.TYPE_ACCELEROMETER:
+                System.arraycopy(event.values, 0, accVector, 0, 3);
+                break;
+            case Sensor.TYPE_MAGNETIC_FIELD:
+                System.arraycopy(event.values, 0, magVector, 0, 3);
+                break;
+            default:
+                return;
+        }
+        rVector[0] = event.values[0];
+        rVector[1] = event.values[1];
+        rVector[2] = event.values[2];
+        calculateAngles(result, rVector,accVector,magVector);
+        result[0] = Math.round(filterYaw.lowPass(result[0]));
+        TextView textView = (TextView) findViewById(R.id.accData);
+        textView.setText("Euler Angles are \nyaw: " + result[0] + " °\n" +
+                "roll: " + result[1]+ " °\n" +
+                "pitch: " + result[2] + " °\n");
+        if (client != null){
+        try {
+
+            //client.send("servo01", "moveTo",(roll+90.0));
+            client.send("oculus","computeAnglesAndroid",result[0],result[1],result[2]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }}}
+
+    public void calculateAngles(float[] result, float[] rVector,float[] accVector, float[] magVector){
+        //caculate temp rotation matrix from rotation vector first
+        SensorManager.getRotationMatrix(rMatrix, null,accVector,magVector);
+        SensorManager.getQuaternionFromVector (quaternion, rVector);
+
+        roll = Math.atan2(2.0f * (quaternion[0] * quaternion[1] + quaternion[2] * quaternion[3]), 1.0f - 2.0f * (quaternion[1] * quaternion[1] + quaternion[2] * quaternion[2]));
+        pitch = Math.asin(2.0f * (quaternion[0] * quaternion[2] - quaternion[3] * quaternion[1]));
+        yaw = Math.atan2(2.0f * (quaternion[0] * quaternion[3] + quaternion[1] * quaternion[2]), 1.0f - 2.0f * (quaternion[2] * quaternion[2] + quaternion[3] * quaternion[3]));
+
+        rollW = ((roll + Math.PI) / (Math.PI * 2.0) * SCALE);
+        pitchW = ((pitch + Math.PI / 2.0) / Math.PI * SCALE);
+        yawW = ((yaw + Math.PI) / (Math.PI * 2.0) * SCALE);
+
+        //calculate Euler angles now
+        SensorManager.getOrientation(rMatrix, result);
+
+        //Now we can convert it to degrees
+        convertToDegrees(result);}
+
+    private void convertToDegrees(float[] vector){
+        for (int i = 0; i < vector.length; i++){
+            vector[i] = Math.round(Math.toDegrees(vector[i]));
+        }}
+
+    public final void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // to do something
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
 
