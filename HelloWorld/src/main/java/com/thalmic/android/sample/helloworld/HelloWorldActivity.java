@@ -7,27 +7,38 @@ package com.thalmic.android.sample.helloworld;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 
+import org.jcodec.common.SeekableByteChannel;
 import org.myrobotlab.service.data.MyoData;
 
 import com.thalmic.myo.AbstractDeviceListener;
@@ -40,10 +51,13 @@ import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.XDirection;
 import com.thalmic.myo.scanner.ScanActivity;
 
+import org.jcodec.api.android.FrameGrab;
+
 import org.myrobotlab.client.Client;
 
 
-public class HelloWorldActivity extends Activity implements SensorEventListener{
+
+public class HelloWorldActivity extends Activity implements SensorEventListener {
 
     LowPassFilter filterYaw = new LowPassFilter(0.03f);
 
@@ -153,17 +167,18 @@ public class HelloWorldActivity extends Activity implements SensorEventListener{
             mRoll.setText("roll:" + Float.toString(roll));
             mPitch.setText("pitch:" + Float.toString(pitch));
             mYaw.setText("yaw:" + Float.toString(yaw));
-            myodata.roll=roll;
+            myodata.roll = roll;
             myodata.yaw = yaw;
             myodata.pitch = pitch;
             myodata.timestamp = timestamp;
             try {
 
-                  //client.send("servo01", "moveTo",(roll+90.0));
-                  client.send("myo","publishMyoData",myodata);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }}
+                //client.send("servo01", "moveTo",(roll+90.0));
+                client.send("myo", "publishMyoData", myodata);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         // onPose() is called whenever a Myo provides a new pose.
         @Override
@@ -174,7 +189,7 @@ public class HelloWorldActivity extends Activity implements SensorEventListener{
             try {
 
                 //client.send("servo01", "moveTo",(roll+90.0));
-                client.send("myo","publishMyoData",myodata);
+                client.send("myo", "publishMyoData", myodata);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -230,7 +245,7 @@ public class HelloWorldActivity extends Activity implements SensorEventListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hello_world);
 
-        sensorManager = (SensorManager)this.getSystemService(SENSOR_SERVICE);
+        sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
         vector = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
         acc = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mag = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
@@ -246,25 +261,26 @@ public class HelloWorldActivity extends Activity implements SensorEventListener{
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
-                try {
-                    String address = v.getText().toString();
-                    client = new Client(("tcp://" + address + ":6767"),"client");
-
                     try {
-                        client.send("runtime", "getUptime");
-                        //client.send("runtime", "start", "arduino", "Arduino");
-                        //client.send("runtime", "start", "servo01", "Servo");
-                    } catch (IOException e) {
+                        String address = v.getText().toString();
+                        client = new Client(("tcp://" + address + ":6767"), "client");
+
+                        try {
+                            client.send("runtime", "getUptime");
+                            //client.send("runtime", "start", "arduino", "Arduino");
+                            //client.send("runtime", "start", "servo01", "Servo");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }
-
-                } catch (URISyntaxException e) {
-                    e.printStackTrace();
+                    handled = true;
                 }
-                handled = true;
+                return handled;
             }
-            return handled;
-        }});
+        });
 
         EditText comPort = (EditText) findViewById(R.id.comport);
         comPort.setOnEditorActionListener(new OnEditorActionListener() {
@@ -278,11 +294,13 @@ public class HelloWorldActivity extends Activity implements SensorEventListener{
                             client.send("arduino", "connect", address);
                         } catch (IOException e) {
                             e.printStackTrace();
-                        }}
-                        handled = true;
+                        }
                     }
-                    return handled;
-                }});
+                    handled = true;
+                }
+                return handled;
+            }
+        });
 
 
         // First, we initialize the Hub singleton with an application identifier.
@@ -353,25 +371,27 @@ public class HelloWorldActivity extends Activity implements SensorEventListener{
         rVector[0] = event.values[0];
         rVector[1] = event.values[1];
         rVector[2] = event.values[2];
-        calculateAngles(result, rVector,accVector,magVector);
+        calculateAngles(result, rVector, accVector, magVector);
         result[0] = Math.round(filterYaw.lowPass(result[0]));
         TextView textView = (TextView) findViewById(R.id.accData);
         textView.setText("Euler Angles are \nyaw: " + result[0] + " °\n" +
-                "roll: " + result[1]+ " °\n" +
+                "roll: " + result[1] + " °\n" +
                 "pitch: " + result[2] + " °\n");
-        if (client != null){
-        try {
+        if (client != null) {
+            try {
 
-            //client.send("servo01", "moveTo",(roll+90.0));
-            client.send("oculus","computeAnglesAndroid",result[0],result[1],result[2]);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }}}
+                //client.send("servo01", "moveTo",(roll+90.0));
+                client.send("oculus", "computeAnglesAndroid", result[0], result[1], result[2]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-    public void calculateAngles(float[] result, float[] rVector,float[] accVector, float[] magVector){
+    public void calculateAngles(float[] result, float[] rVector, float[] accVector, float[] magVector) {
         //caculate temp rotation matrix from rotation vector first
-        SensorManager.getRotationMatrix(rMatrix, null,accVector,magVector);
-        SensorManager.getQuaternionFromVector (quaternion, rVector);
+        SensorManager.getRotationMatrix(rMatrix, null, accVector, magVector);
+        SensorManager.getQuaternionFromVector(quaternion, rVector);
 
         roll = Math.atan2(2.0f * (quaternion[0] * quaternion[1] + quaternion[2] * quaternion[3]), 1.0f - 2.0f * (quaternion[1] * quaternion[1] + quaternion[2] * quaternion[2]));
         pitch = Math.asin(2.0f * (quaternion[0] * quaternion[2] - quaternion[3] * quaternion[1]));
@@ -385,12 +405,14 @@ public class HelloWorldActivity extends Activity implements SensorEventListener{
         SensorManager.getOrientation(rMatrix, result);
 
         //Now we can convert it to degrees
-        convertToDegrees(result);}
+        convertToDegrees(result);
+    }
 
-    private void convertToDegrees(float[] vector){
-        for (int i = 0; i < vector.length; i++){
+    private void convertToDegrees(float[] vector) {
+        for (int i = 0; i < vector.length; i++) {
             vector[i] = Math.round(Math.toDegrees(vector[i]));
-        }}
+        }
+    }
 
     public final void onAccuracyChanged(Sensor sensor, int accuracy) {
         // to do something
@@ -402,12 +424,9 @@ public class HelloWorldActivity extends Activity implements SensorEventListener{
     }
 
 
-
-
-
     private void onScanActionSelected() {
         // Launch the ScanActivity to scan for Myos to connect to.
         Intent intent = new Intent(this, ScanActivity.class);
         startActivity(intent);
     }
-}
+    }
