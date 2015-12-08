@@ -30,6 +30,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.thalmic.android.sample.helloworld.SensorSender"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_camera_view"
+            android:parentActivityName="com.thalmic.android.sample.helloworld.HelloWorldActivity">
+            //android:theme="@style/FullscreenTheme"
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.thalmic.android.sample.helloworld.HelloWorldActivity" />
+        </activity>
     </application>
 
 </manifest>

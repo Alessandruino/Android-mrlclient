@@ -18,6 +18,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -31,6 +34,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -38,6 +42,10 @@ import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.jcodec.common.SeekableByteChannel;
 import org.myrobotlab.service.data.MyoData;
 
@@ -89,11 +97,23 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
     private double roll;
     private double pitch;
     private double yaw;
+    private String ip;
 
 
     Client client;
 
     MyoData myodata = new MyoData();
+
+    private long interval = 100;
+    private long prevMillis = 0;
+    private boolean sendPosition = false;
+
+    // for the low-pass filter:
+    static final float ALPHA = 0.1f;
+    protected float[] accelVals;
+
+    private MjpegView mv;
+    private static final String TAG = "MjpegActivity";
 
 
     // Classes that inherit from AbstractDeviceListener can be used to receive events from Myo devices.
@@ -261,6 +281,8 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    ip = v.getText().toString();
+                    startVideo();
                     try {
                         String address = v.getText().toString();
                         client = new Client(("tcp://" + address + ":6767"), "client");
@@ -429,4 +451,11 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
         Intent intent = new Intent(this, ScanActivity.class);
         startActivity(intent);
     }
+
+    public void startVideo() {
+            Intent intent = new Intent(this, SensorSender.class);
+            intent.putExtra("udpIp", ip);
+            startActivity(intent);
+        }
     }
+

@@ -13,5 +13,7 @@
     <string name="arm_right">Right Arm</string>
     <string name="unlocked">Unlocked</string>
     <string name="locked">Locked</string>
-
+    <string name="title_activity_camera_view">CameraView</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

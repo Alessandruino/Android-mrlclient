@@ -71,5 +71,13 @@
         android:imeOptions="actionSend"
         android:inputType="textUri" />
 
+    <TextView
+        android:layout_marginTop="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Acc data"
+        android:id="@+id/accData"
+        android:layout_gravity="left|center_vertical" />
+
 </FrameLayout>
 <!-- From: file:/Users/Alessandruino/Downloads/myo/samples/HelloWorld/src/main/res/layout/activity_hello_world.xml -->
