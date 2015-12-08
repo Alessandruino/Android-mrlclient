@@ -54,6 +54,16 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:hint="enter ip video"
+        android:id="@+id/videoip"
+        android:layout_gravity="left|top"
+        android:layout_marginTop="150dp"
+        android:imeOptions="actionSend"
+        android:inputType="textUri" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:hint="enter ip of mrl instance"
         android:id="@+id/connect"
         android:layout_gravity="left|top"

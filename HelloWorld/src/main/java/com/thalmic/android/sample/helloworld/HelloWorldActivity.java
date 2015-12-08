@@ -275,14 +275,32 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
         mRoll = (TextView) findViewById(R.id.roll);
         mPitch = (TextView) findViewById(R.id.pitch);
         mYaw = (TextView) findViewById(R.id.yaw);
-        EditText connect = (EditText) findViewById(R.id.connect);
-        connect.setOnEditorActionListener(new OnEditorActionListener() {
+
+        EditText videoip = (EditText) findViewById(R.id.videoip);
+        videoip.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
                     ip = v.getText().toString();
                     startVideo();
+                handled = true;
+                 }
+
+            return handled;
+                }
+            });
+
+
+
+
+        EditText connect = (EditText) findViewById(R.id.connect);
+        connect.setOnEditorActionListener(new OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+
                     try {
                         String address = v.getText().toString();
                         client = new Client(("tcp://" + address + ":6767"), "client");
