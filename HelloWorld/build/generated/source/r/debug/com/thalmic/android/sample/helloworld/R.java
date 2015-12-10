@@ -39,25 +39,29 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int myosdk__firmware_incompatible_dot=0x7f020002;
     }
     public static final class id {
-        public static final int accData=0x7f09000b;
-        public static final int action_scan=0x7f090012;
-        public static final int comport=0x7f09000a;
-        public static final int connect=0x7f090009;
+        public static final int accData=0x7f09000c;
+        public static final int action_scan=0x7f090016;
+        public static final int calibrate=0x7f09000d;
+        public static final int cardboard=0x7f09000e;
+        public static final int cardboardMode=0x7f09000f;
+        public static final int comport=0x7f09000b;
+        public static final int connect=0x7f09000a;
         public static final int container=0x7f090003;
         public static final int dummy_button=0x7f090002;
         public static final int fullscreen_content=0x7f090000;
         public static final int fullscreen_content_controls=0x7f090001;
         public static final int lock_state=0x7f090008;
-        public static final int myosdk__action_scan=0x7f090013;
-        public static final int myosdk__connection_state_dot=0x7f09000f;
-        public static final int myosdk__fragment_scan=0x7f09000c;
-        public static final int myosdk__progress=0x7f09000e;
-        public static final int myosdk__required_firmware_version_text=0x7f09000d;
-        public static final int myosdk__scan_result_view=0x7f090010;
+        public static final int myosdk__action_scan=0x7f090017;
+        public static final int myosdk__connection_state_dot=0x7f090013;
+        public static final int myosdk__fragment_scan=0x7f090010;
+        public static final int myosdk__progress=0x7f090012;
+        public static final int myosdk__required_firmware_version_text=0x7f090011;
+        public static final int myosdk__scan_result_view=0x7f090014;
         public static final int pitch=0x7f090004;
         public static final int roll=0x7f090005;
         public static final int text=0x7f090007;
-        public static final int textView=0x7f090011;
+        public static final int textView=0x7f090015;
+        public static final int videoip=0x7f090009;
         public static final int yaw=0x7f090006;
     }
     public static final class layout {

@@ -89,4 +89,32 @@
         android:id="@+id/accData"
         android:layout_gravity="left|center_vertical" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calibrate"
+        android:id="@+id/calibrate"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="190dp"
+        android:layout_marginRight="50dp" />
+
+    <ToggleButton
+        android:layout_width="119dp"
+        android:layout_height="39dp"
+        android:text="Cardboard"
+        android:id="@+id/cardboard"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="220dp"
+        android:layout_marginRight="20dp"
+        android:checked="false" />
+
+    <TextView
+        android:layout_width="127dp"
+        android:layout_height="28dp"
+        android:text="Cardboard Mode"
+        android:id="@+id/cardboardMode"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="10dp" />
+
 </FrameLayout>

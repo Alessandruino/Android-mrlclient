@@ -26,11 +26,14 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -98,6 +101,7 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
     private double pitch;
     private double yaw;
     private String ip;
+    private boolean cardboardMode;
 
 
     Client client;
@@ -342,6 +346,33 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
             }
         });
 
+        final Button calibrate = (Button) findViewById(R.id.calibrate);
+        calibrate.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //
+                // Perform action on click
+                if (client != null) {
+                    try {
+                        client.send("oculus", "calibrate");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+
+        ToggleButton toggle = (ToggleButton) findViewById(R.id.cardboard);
+        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    cardboardMode = true;
+                } else {
+                    cardboardMode = false;
+                }
+            }
+        });
+
 
         // First, we initialize the Hub singleton with an application identifier.
         Hub hub = Hub.getInstance();
@@ -473,6 +504,7 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
     public void startVideo() {
             Intent intent = new Intent(this, SensorSender.class);
             intent.putExtra("udpIp", ip);
+            intent.putExtra("cardboardMode",cardboardMode);
             startActivity(intent);
         }
     }

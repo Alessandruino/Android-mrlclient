@@ -31,8 +31,10 @@ public class SensorSender extends Activity {
     protected float[] accelVals;
 
     private String udpIp;
+    private boolean cardboardMode;
 
     private MjpegView mv;
+    private DoubleMjpegView mv2;
     private static final String TAG = "MjpegActivity";
 
     /** Called when the activity is first created. */
@@ -50,26 +52,44 @@ public class SensorSender extends Activity {
         Intent iin = getIntent();
         Bundle extras = iin.getExtras();
         udpIp = extras.getString("udpIp");
+        cardboardMode = extras.getBoolean("cardboardMode");
 
         // Here we'll form the MJPG stream URL:
         String URL = "http://" + udpIp + ":8080/?action=stream";
 
         // Now show the MJPG stream:
+        if (cardboardMode == true) {
+            mv2 = new DoubleMjpegView(this);
+            setContentView(mv2);
+            new DoRead().execute(URL);
+            }
+        else {
         mv = new MjpegView(this);
         setContentView(mv);
-        new DoRead().execute(URL);
-    }
+        new DoRead().execute(URL);}
+        }
 
     @Override
     protected void onPause() {
         // unregister listener
         super.onPause();
-        mv.stopPlayback();
+        if (cardboardMode == true) {
+            mv2.stopPlayback();
+        }
+        else {
+            mv.stopPlayback();
+    }
+
     }
 
     protected void onResume(){
         super.onResume();
-        mv.startPlayback();
+        if (cardboardMode == true) {
+            mv2.stopPlayback();
+        }
+        else {
+            mv.stopPlayback();
+        }
     }
 
     public class DoRead extends AsyncTask<String, Void, MjpegInputStream> {
@@ -104,9 +124,15 @@ public class SensorSender extends Activity {
         }
 
         protected void onPostExecute(MjpegInputStream result) {
+            if (cardboardMode == true) {
+                mv2.setSource(result);
+                mv2.setDisplayMode(DoubleMjpegView.SIZE_BEST_FIT);
+                mv2.showFps(false);
+            }
+            else {
             mv.setSource(result);
             mv.setDisplayMode(MjpegView.SIZE_FULLSCREEN);
-            mv.showFps(false);
+            mv.showFps(false);}
         }
     }
 }
