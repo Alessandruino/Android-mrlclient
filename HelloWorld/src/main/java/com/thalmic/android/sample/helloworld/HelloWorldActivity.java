@@ -89,6 +89,7 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
     private float[] accVector = new float[3];
     private float[] magVector = new float[3];
     private float[] result = new float[3];
+    private float[] oldResult = new float[3];
     private float[] tempRMatrix = new float[9];
     private float[] quaternion = new float[4];
 
@@ -96,6 +97,9 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
     private double rollW;
     private double pitchW;
     private double yawW;
+
+    boolean deltaMyo = false;
+    boolean deltaOculus = false;
 
     private double roll;
     private double pitch;
@@ -184,23 +188,27 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
                 pitch *= -1;
             }
 
-            // Next, we apply a rotation to the text view using the roll, pitch, and yaw.
-            mTextView.setRotation(roll);
-            mTextView.setRotationX(pitch);
-            mTextView.setRotationY(yaw);
-            mRoll.setText("roll:" + Float.toString(roll));
-            mPitch.setText("pitch:" + Float.toString(pitch));
-            mYaw.setText("yaw:" + Float.toString(yaw));
-            myodata.roll = roll;
-            myodata.yaw = yaw;
-            myodata.pitch = pitch;
-            myodata.timestamp = timestamp;
-            try {
+            deltaMyo = ((Math.abs(myodata.roll - roll) >=  1) || (  Math.abs(myodata.pitch - pitch) >= 1) || ( Math.abs(myodata.yaw - yaw) >= 1));
 
-                //client.send("servo01", "moveTo",(roll+90.0));
-                client.send("myo", "publishMyoData", myodata);
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (deltaMyo) {
+                // Next, we apply a rotation to the text view using the roll, pitch, and yaw.
+                mTextView.setRotation(roll);
+                mTextView.setRotationX(pitch);
+                mTextView.setRotationY(yaw);
+                mRoll.setText("roll:" + Float.toString(roll));
+                mPitch.setText("pitch:" + Float.toString(pitch));
+                mYaw.setText("yaw:" + Float.toString(yaw));
+                myodata.roll = roll;
+                myodata.yaw = yaw;
+                myodata.pitch = pitch;
+                myodata.timestamp = timestamp;
+                try {
+
+                    //client.send("servo01", "moveTo",(roll+90.0));
+                    client.send("myo", "publishMyoData", myodata);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -444,11 +452,16 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
         rVector[2] = event.values[2];
         calculateAngles(result, rVector, accVector, magVector);
         result[0] = Math.round(filterYaw.lowPass(result[0]));
+        deltaOculus = ((Math.abs(oldResult[0] - result[0]) >  1) || (  Math.abs(oldResult[1] - result[1]) > 1) || ( Math.abs(oldResult[2] - result[2]) > 1));
+        if (deltaOculus){
         TextView textView = (TextView) findViewById(R.id.accData);
         textView.setText("Euler Angles are \nyaw: " + result[0] + " °\n" +
                 "roll: " + result[1] + " °\n" +
                 "pitch: " + result[2] + " °\n");
-        if (client != null) {
+            oldResult[0] = result[0];
+            oldResult[1] = result[1];
+            oldResult[2] = result[2];
+            if (client != null) {
             try {
 
                 //client.send("servo01", "moveTo",(roll+90.0));
@@ -456,7 +469,7 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        }}
     }
 
     public void calculateAngles(float[] result, float[] rVector, float[] accVector, float[] magVector) {
