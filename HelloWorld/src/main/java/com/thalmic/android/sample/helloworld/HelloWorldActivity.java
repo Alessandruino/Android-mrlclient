@@ -106,6 +106,7 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
     private double yaw;
     private String ip;
     private boolean cardboardMode;
+    private boolean headTrackingMode;
 
 
     Client client;
@@ -370,13 +371,24 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
             }
         });
 
-        ToggleButton toggle = (ToggleButton) findViewById(R.id.cardboard);
-        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        ToggleButton toggleCardboard = (ToggleButton) findViewById(R.id.cardboard);
+        toggleCardboard.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     cardboardMode = true;
                 } else {
                     cardboardMode = false;
+                }
+            }
+        });
+
+        ToggleButton toggleHeadTracking = (ToggleButton) findViewById(R.id.headTrackingButton);
+        toggleHeadTracking.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    headTrackingMode = true;
+                } else {
+                    headTrackingMode = false;
                 }
             }
         });
@@ -461,6 +473,8 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
             oldResult[0] = result[0];
             oldResult[1] = result[1];
             oldResult[2] = result[2];
+            if (headTrackingMode){
+
             if (client != null) {
             try {
 
@@ -469,7 +483,7 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }}
+        }}}
     }
 
     public void calculateAngles(float[] result, float[] rVector, float[] accVector, float[] magVector) {
