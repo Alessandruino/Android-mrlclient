@@ -100,6 +100,7 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
 
     boolean deltaMyo = false;
     boolean deltaOculus = false;
+    boolean deltaPose = false;
 
     private double roll;
     private double pitch;
@@ -203,13 +204,13 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
                 myodata.yaw = yaw;
                 myodata.pitch = pitch;
                 myodata.timestamp = timestamp;
-                try {
+                if (client != null ) {try {
 
                     //client.send("servo01", "moveTo",(roll+90.0));
                     client.send("myo", "publishMyoData", myodata);
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
+                }}
             }
         }
 
@@ -218,14 +219,18 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
         public void onPose(Myo myo, long timestamp, Pose pose) {
             // Handle the cases of the Pose enumeration, and change the text of the text view
             // based on the pose we receive.
+            if (pose.toString() != myodata.currentPose){
+                deltaPose = true;
+            }
             myodata.currentPose = pose.toString();
-            try {
+            if (client != null & deltaPose) {try {
 
                 //client.send("servo01", "moveTo",(roll+90.0));
                 client.send("myo", "publishMyoData", myodata);
+                deltaPose = false;
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }}
             switch (pose) {
                 case UNKNOWN:
                     mTextView.setText(getString(R.string.hello_world));
@@ -268,7 +273,7 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
             } else {
                 // Tell the Myo to stay unlocked only for a short period. This allows the Myo to
                 // stay unlocked while poses are being performed, but lock after inactivity.
-                myo.unlock(Myo.UnlockType.TIMED);
+                myo.unlock(Myo.UnlockType.HOLD);
             }
         }
     };
@@ -404,7 +409,7 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
         }
         // Next, register for DeviceListener callbacks.
         hub.addListener(mListener);
-        hub.attachToAdjacentMyo();
+        //hub.attachToAdjacentMyo();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
     }
