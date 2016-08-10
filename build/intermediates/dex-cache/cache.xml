@@ -6,21 +6,35 @@
         jumboMode="false"
         revision="19.1.0"
         sha1="6e12ec1420e8a07721549b44323e145c03173de5">
-        <dex dex="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/build/intermediates/pre-dexed/release/myrobotlab-client-818b1dee0a09ab9dabca8825db24f1610216526a.jar" />
+        <dex dex="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/build/intermediates/pre-dexed/debug/myrobotlab-client-818b1dee0a09ab9dabca8825db24f1610216526a.jar" />
     </item>
     <item
-        jar="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/build/intermediates/exploded-aar/com.thalmic/myosdk/0.10.0/libs/native-libs.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="d24ac9790966ffbd1bd9d921a262572c94903027">
-        <dex dex="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/build/intermediates/pre-dexed/release/native-libs-9dc5a24dc2ae44256275b0ad2d5a0b5209d93aa4.jar" />
-    </item>
-    <item
-        jar="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/build/intermediates/exploded-aar/com.thalmic/myosdk/0.10.0/classes.jar"
+        jar="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/build/intermediates/exploded-aar/com.thalmic/myosdk/0.10.0/jars/classes.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="d189db75174a41996c33bb243d2228aacf10fa53">
-        <dex dex="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/build/intermediates/pre-dexed/release/classes-7c2f844ff5e448c1e75dcf3e44a696571aa0e1e5.jar" />
+        <dex dex="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/build/intermediates/pre-dexed/debug/classes-a3aaf0d6f14b87c666232866298c24c7a0c7d023.jar" />
+    </item>
+    <item
+        jar="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/build/intermediates/exploded-aar/com.thalmic/myosdk/0.10.0/jars/libs/native-libs.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="d24ac9790966ffbd1bd9d921a262572c94903027">
+        <dex dex="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/build/intermediates/pre-dexed/debug/native-libs-908098426a1854afa0be731cfb7403178bb368de.jar" />
+    </item>
+    <item
+        jar="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/libs/jcodec-0.1.9.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="d874724f18c8ebc54931d1ab9b4603b7c6a7cf93">
+        <dex dex="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/build/intermediates/pre-dexed/debug/jcodec-0.1.9-63e6a8742ab6f12e51fef51a6f486c6b3246abc5.jar" />
+    </item>
+    <item
+        jar="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/libs/jcodec-android-0.1.9.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="390f4672af45d022b05015e21388e6836178f0bb">
+        <dex dex="/Users/Alessandruino/Downloads/myo/samples/HelloWorld/build/intermediates/pre-dexed/debug/jcodec-android-0.1.9-019bd594451b1a6faa17bc8cc939e6de1cb14085.jar" />
     </item>
 
 </items>

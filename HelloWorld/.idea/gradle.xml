@@ -10,10 +10,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/.." />
-            <option value="$PROJECT_DIR$/../Background" />
-            <option value="$PROJECT_DIR$/../Glass" />
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/../MultipleMyos" />
           </set>
         </option>
       </GradleProjectSettings>

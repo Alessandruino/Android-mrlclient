@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="0.10.0"><source path="/Users/Alessandruino/Downloads/myo/samples/MultipleMyos/build/intermediates/exploded-aar/com.thalmic/myosdk/0.10.0/assets"/></dataSet><dataSet config="main"><source path="/Users/Alessandruino/Downloads/myo/samples/MultipleMyos/src/main/assets"/></dataSet><dataSet config="debug"><source path="/Users/Alessandruino/Downloads/myo/samples/MultipleMyos/src/debug/assets"/></dataSet></merger>
