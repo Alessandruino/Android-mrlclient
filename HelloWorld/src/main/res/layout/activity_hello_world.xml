@@ -33,15 +33,6 @@
         android:textSize="30dp" />
 
     <TextView
-        android:id="@+id/text"
-        android:text="@string/hello_world"
-        android:textSize="50dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|center_vertical"
-        tools:ignore="SpUsage"/>
-
-    <TextView
         android:id="@+id/lock_state"
         android:text="@string/locked"
         android:textSize="20dp"
@@ -52,7 +43,7 @@
         tools:ignore="SpUsage"/>
 
     <EditText
-        android:layout_width="fill_parent"
+        android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:hint="enter ip video"
         android:id="@+id/videoip"
@@ -62,7 +53,7 @@
         android:inputType="textUri" />
 
     <EditText
-        android:layout_width="fill_parent"
+        android:layout_width="255dp"
         android:layout_height="wrap_content"
         android:hint="enter ip of mrl instance"
         android:id="@+id/connect"
@@ -72,7 +63,7 @@
         android:inputType="textUri" />
 
     <EditText
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="enter the com port of arduino"
         android:id="@+id/comport"
@@ -80,24 +71,6 @@
         android:layout_marginTop="100dp"
         android:imeOptions="actionSend"
         android:inputType="textUri" />
-
-    <TextView
-        android:layout_marginTop="100dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Acc data"
-        android:id="@+id/accData"
-        android:layout_gravity="left|center_vertical" />
-
-    <ToggleButton
-        android:layout_width="119dp"
-        android:layout_height="39dp"
-        android:text="Cardboard"
-        android:id="@+id/cardboard"
-        android:layout_gravity="right|top"
-        android:layout_marginTop="220dp"
-        android:layout_marginRight="20dp"
-        android:checked="false" />
 
     <TextView
         android:layout_width="127dp"
@@ -109,22 +82,14 @@
         android:layout_marginRight="10dp" />
 
     <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="39dp"
         android:text="HeadTracking"
         android:id="@+id/headTrackingButton"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="200dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Calibrate"
-        android:id="@+id/calibrate"
-        android:layout_gravity="left|top"
-        android:layout_marginTop="190dp"
-        android:layout_marginRight="50dp" />
+        android:layout_marginTop="200dp"
+        android:checked="false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -134,5 +99,41 @@
         android:layout_gravity="center_horizontal|top"
         android:layout_marginTop="200dp"
         android:layout_marginLeft="50dp" />
+
+    <TextView
+        android:id="@+id/text"
+        android:text="@string/hello_world"
+        android:textSize="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        tools:ignore="SpUsage"/>
+
+    <ToggleButton
+        android:layout_width="100dp"
+        android:layout_height="39dp"
+        android:text="Cardboard"
+        android:id="@+id/cardboard"
+        android:layout_gravity="right|bottom"
+        android:layout_marginTop="220dp"
+        android:layout_marginRight="20dp"
+        android:checked="false" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="39dp"
+        android:text="Calibrate"
+        android:id="@+id/calibrate"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginTop="190dp"
+        android:layout_marginRight="50dp" />
+
+    <TextView
+        android:layout_marginTop="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Acc data"
+        android:id="@+id/accData"
+        android:layout_gravity="right|top" />
 
 </FrameLayout>
