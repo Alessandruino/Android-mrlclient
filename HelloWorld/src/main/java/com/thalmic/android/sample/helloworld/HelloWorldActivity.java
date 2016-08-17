@@ -53,6 +53,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.jcodec.common.SeekableByteChannel;
+import org.myrobotlab.service.data.JoystickData;
 import org.myrobotlab.service.data.MyoData;
 
 import com.thalmic.myo.AbstractDeviceListener;
@@ -104,6 +105,7 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
     boolean deltaMyo = false;
     boolean deltaOculus = false;
     boolean deltaPose = false;
+    boolean deltaJoystick = false;
 
     private double roll;
     private double pitch;
@@ -111,6 +113,9 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
     private String ip;
     private boolean cardboardMode;
     private boolean headTrackingMode;
+
+    private float oldJoystickX;
+    private float oldJoystickY;
 
 
     Client client;
@@ -599,12 +604,30 @@ public class HelloWorldActivity extends Activity implements SensorEventListener 
                     MotionEvent.AXIS_RZ, historyPos);
         }
 
-        mPitch.setText("y is :" + y);
+        deltaJoystick = ((Math.abs(oldJoystickX - x) >=  0.1) || (  Math.abs(oldJoystickY - y) >= 0.1));
+
+        JoystickData joystickDataX = new JoystickData("x",x);
+        JoystickData joystickDataY = new JoystickData("y",y);
+
+        if (deltaJoystick){
+
+            mPitch.setText("y is :" + y);
+            oldJoystickX = x;
+            oldJoystickY = y;
+
+        if (client != null ) {try {
+
+            //client.send("servo01", "moveTo",(roll+90.0));
+            client.send("joystick", "publishJoystickInput", joystickDataX);
+            client.send("joystick", "publishJoystickInput", joystickDataY);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }}}
+
 
     }
 
-    private static float getCenteredAxis(MotionEvent event,
-                                         InputDevice device, int axis, int historyPos) {
+    private static float getCenteredAxis(MotionEvent event, InputDevice device, int axis, int historyPos) {
         final InputDevice.MotionRange range =
                 device.getMotionRange(axis, event.getSource());
 
